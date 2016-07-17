@@ -1,0 +1,29 @@
+body {
+	background-image: url(../images/stars.png);
+}
+h1{
+	color: yellow;
+}
+h2{
+	color: yellow;
+}
+#title {
+	margin: 20px;
+}
+#time {
+	margin: auto;
+}
+#timer {
+	color: yellow;
+}
+span {
+	color: yellow;
+}
+.background {
+	width: 600px;
+	height: 500px;
+	margin: auto;
+	background-color: white;
+	border: 10px solid lightblue;
+	border-radius: 20px;
+}
