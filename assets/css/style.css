@@ -1,6 +1,6 @@
-body {
+/*body {
 	background-image: url(../images/stars.png);
-}
+}*/
 h1{
 	color: yellow;
 }
@@ -26,4 +26,16 @@ span {
 	background-color: white;
 	border: 10px solid lightblue;
 	border-radius: 20px;
+}
+answerOne:hover {
+
+}
+answerTwo:hover {
+
+}
+answerThree:hover {
+
+}
+answerFour:hover {
+	
 }
