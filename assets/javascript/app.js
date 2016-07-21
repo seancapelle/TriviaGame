@@ -50,27 +50,54 @@ var game = {
 	correctScore: 0,
 	incorrectScore: 0,
 	unanswered: 0,
-	results: ["The Force is with you!", "That is why you fail."],
+	results: ["The Force is strong with this one!", "That is why you fail."],
 
 	//Functions
+
+	start: function() {
+		//Create Start button
+		$('#graphic').html('<button id="start">START</button>');
+
+		//When Start clicked
+		$('#start').unbind().click(function() {
+			
+			//Remove the button
+			$('#start').remove();
+
+			//Go to askQuestion()
+			game.askQuestion();
+		})
+	},
 	countDown: function() {
 
 		console.log("In countDown");
 
 		// setTimeout(function(){ game.nextQuestion(); }, 15000);
 
-		// if(game.timer > 0){
-		// 	game.timer--;
-		// 	$('#timer').html(game.timer);
-		// }
-		// else {
-		// 	clearInterval(game.countDown);
-			
-		// }
+		if(game.timer > 0){
+			//Decrement time
+			game.timer--;
+			//Display current time
+			$('#timer').html(game.timer);
+		}
+		else {
+			//Clear countDown timer
+			clearInterval();
+
+			//Set userGuess to nothing
+			userGuess = null;
+
+			//Provide correct answer
+			correct = question[0].correctAnswer
+
+			//Go to checkGuess
+			game.checkGuess(userGuess, correct);
+		}
 	},
 
 	askQuestion: function() {
 
+		//Create divs for each answer to go
 		$('#aDisplay').append("<div id ='answerOne'</div>");
 		$('#aDisplay').append("<div id ='answerTwo'</div>");
 		$('#aDisplay').append("<div id ='answerThree'</div>");
@@ -81,7 +108,7 @@ var game = {
 		console.log("In askQuestion");
 
 		//Timer counts down
-		// setInterval(game.countDown, 1000);
+		//setInterval(game.countDown, 1000);
 	
 		//Display question
 		$('#qDisplay').html(question[0].question);
@@ -154,6 +181,29 @@ var game = {
 			game.pause();
 
 		}
+		else if (userGuess === null){
+			
+			//Discourage
+			$('#qDisplay').html(game.results[1]);
+
+			//Empty the answers
+			$('#answerOne').remove();
+			$('#answerTwo').remove();
+			$('#answerThree').remove();
+			$('#answerFour').remove();
+
+			$('#aDisplay').html("The correct answer was " + correct);
+
+			//Assign pic to correctImg and display
+			var correctImg = '<img src="http://i.giphy.com/l2JJLpA2wWNqJUwXC.gif" width="480" height="300"/>';
+			$('#graphic').html(correctImg);
+
+			game.unanswered++;
+			
+			game.pause();
+
+		}
+
 		else {
 			//Discourage
 			$('#qDisplay').html(game.results[1]);
@@ -164,19 +214,24 @@ var game = {
 			$('#answerThree').remove();
 			$('#answerFour').remove();
 
+			$('#aDisplay').html("The correct answer was " + correct);
+
 			//Assign pic to correctImg and display
 			var correctImg = '<img src="http://i.giphy.com/l2JJLpA2wWNqJUwXC.gif" width="480" height="300"/>';
 			$('#graphic').html(correctImg);
 
 			game.incorrectScore++;
-			
-			//Timer counts down
-		// setInterval(game.pause, 1000);
+
 			game.pause();
 		}
 	},
 
 	pause: function() {
+
+		//Stop countDown
+		clearInterval();
+
+		console.log("In pause");
 
 		//Wait 4 seconds before going to nextQuestion
 		setTimeout(function(){ game.nextQuestion(); }, 4000);
@@ -186,7 +241,10 @@ var game = {
 
 		console.log("In nextQuestion");
 
-		//CLEAR THE #graphic div???
+		//Clear "Correct answer was"
+		$('#aDisplay').empty();
+
+		//Clear the #graphic div
 		$('#graphic').empty();
 
 		//Set next question to index 0
@@ -195,17 +253,15 @@ var game = {
 		//Checks if any questions are left
 		if(question.length === 0) {
 			
+			//If no more questions, end game
 			game.finished();
 		}
 		else {
-			game.askQuestion();	
-	
 			//Reset seconds
-			game.timer = 30;
+			game.timer = 15;
 
-			//CAN'T GET TIMER TO STOP!!!
-			// window.refreshIntervalId;
-			clearInterval(game.countDown);
+			//Ask new question
+			game.askQuestion();	
 		}
 
 	},
@@ -213,33 +269,44 @@ var game = {
 	finished: function() {
 		
 		console.log("In finished");
-		console.log(game.correctScore);
-		console.log(game.incorrectScore);
-		console.log(game.unanswered);
-		$('#qDisplay').html("May the Force be with you!");
+
+		//Display stats
+		$('#qDisplay').html("The Force will be with you, always.");
 		$('#aDisplay').html("<p>Number of questions right: " + game.correctScore + "</p>" +
 							"<p>Number of questions wrong: " + game.incorrectScore + "</p>" +
 							"<p>Number of questions unanswered: " + game.unanswered + "</p>");
+
+
+		//Create Reset button
+		$('#graphic').html('<button id="reset">RESET</button>');
+
+		//When Reset clicked
+		$('#reset').unbind().click(function() {
+			
+			//Remove the button
+			$('#reset').remove();
+
+			//Go to game.reset()
+			game.reset();
+
+		})
 	},
 
 	reset: function() {
 
+		console.log("In reset");
+
+		//Reset page
 		location.reload();
 	},
 
 };
 
-//Start of game
-// $(document).ready(function(){
-
-game.askQuestion();
+//Start the game
+game.start();
 
 
-// })
 
-
-//NOTES
-//question++
 
 
 
