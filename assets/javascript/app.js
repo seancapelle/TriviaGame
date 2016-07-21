@@ -45,7 +45,8 @@ var question = [{
 var game = {
 
 	//Variables
-	timer: 30,
+	timer: 15,
+	pauseTimer: 5,
 	correctScore: 0,
 	incorrectScore: 0,
 	unanswered: 0,
@@ -56,24 +57,31 @@ var game = {
 
 		console.log("In countDown");
 
-		if(game.timer > 0){
-			game.timer--;
-			$('#timer').html(game.timer);
-		}
-		else {
-			clearInterval(game.countDown);
+		// setTimeout(function(){ game.nextQuestion(); }, 15000);
+
+		// if(game.timer > 0){
+		// 	game.timer--;
+		// 	$('#timer').html(game.timer);
+		// }
+		// else {
+		// 	clearInterval(game.countDown);
 			
-		}
+		// }
 	},
 
 	askQuestion: function() {
 
-		window.refreshIntervalId;
+		$('#aDisplay').append("<div id ='answerOne'</div>");
+		$('#aDisplay').append("<div id ='answerTwo'</div>");
+		$('#aDisplay').append("<div id ='answerThree'</div>");
+		$('#aDisplay').append("<div id ='answerFour'</div>");
+
+		//window.refreshIntervalId;
 
 		console.log("In askQuestion");
 
 		//Timer counts down
-		setInterval(game.countDown, 1000);
+		// setInterval(game.countDown, 1000);
 	
 		//Display question
 		$('#qDisplay').html(question[0].question);
@@ -131,39 +139,55 @@ var game = {
 			//Display congrats
 			$('#qDisplay').html(game.results[0]);
 			
-			//Zero out answers to display none of them
-			question.answers = [];
-			$('#aDisplay').html(question.answers);
+			//Empty the answers
+			$('#answerOne').remove();
+			$('#answerTwo').remove();
+			$('#answerThree').remove();
+			$('#answerFour').remove();
 
 			//Assign pic to correctImg and display
 			var correctImg = '<img src="http://i.giphy.com/3o8doOlGO3pjQa5h28.gif" width="480" height="207"/>';
 			$('#graphic').html(correctImg);
 
 			game.correctScore++;
-			// game.nextQuestion();
+			
+			game.pause();
 
 		}
 		else {
 			//Discourage
 			$('#qDisplay').html(game.results[1]);
 
-			//Zero out answers to display none of them and show correct
-			question.answers = [];
-			$('#aDisplay').html("The correct answer was " + correct);
+			//Empty the answers
+			$('#answerOne').remove();
+			$('#answerTwo').remove();
+			$('#answerThree').remove();
+			$('#answerFour').remove();
 
 			//Assign pic to correctImg and display
 			var correctImg = '<img src="http://i.giphy.com/l2JJLpA2wWNqJUwXC.gif" width="480" height="300"/>';
 			$('#graphic').html(correctImg);
 
-
 			game.incorrectScore++;
-			// game.nextQuestion();
+			
+			//Timer counts down
+		// setInterval(game.pause, 1000);
+			game.pause();
 		}
+	},
+
+	pause: function() {
+
+		//Wait 4 seconds before going to nextQuestion
+		setTimeout(function(){ game.nextQuestion(); }, 4000);
 	},
 
 	nextQuestion: function() {
 
 		console.log("In nextQuestion");
+
+		//CLEAR THE #graphic div???
+		$('#graphic').empty();
 
 		//Set next question to index 0
 		question.shift();
