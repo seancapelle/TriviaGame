@@ -46,14 +46,12 @@ var game = {
 
 	//Variables
 	timer: 15,
-	pauseTimer: 5,
 	correctScore: 0,
 	incorrectScore: 0,
 	unanswered: 0,
 	results: ["The Force is strong with this one!", "That is why you fail."],
 
 	//Functions
-
 	start: function() {
 		//Create Start button
 		$('#graphic').html('<button id="start">START</button>');
@@ -64,7 +62,7 @@ var game = {
 			//Remove the button
 			$('#start').remove();
 
-			//Go to askQuestion()
+			//Go to askQuestion
 			game.askQuestion();
 		})
 	},
@@ -72,27 +70,38 @@ var game = {
 
 		console.log("In countDown");
 
-		// setTimeout(function(){ game.nextQuestion(); }, 15000);
-
 		if(game.timer > 0){
+			
 			//Decrement time
 			game.timer--;
+			
 			//Display current time
 			$('#timer').html(game.timer);
 		}
 		else {
 			//Clear countDown timer
 			clearInterval();
-
-			//Set userGuess to nothing
-			userGuess = null;
-
-			//Provide correct answer
-			correct = question[0].correctAnswer
-
-			//Go to checkGuess
-			game.checkGuess(userGuess, correct);
+			//Go to timeUp
+			game.timeUp();
 		}
+	},
+
+	timeUp: function() {
+
+		console.log("In timeUp");
+
+		//Stop the timer
+		clearInterval(clock);
+
+		//Set userGuess to nothing. You get nothing! Good day, sir!
+		userGuess = null;
+
+		//Provide correct answer
+		correct = question[0].correctAnswer
+
+		//Go to checkGuess
+		game.checkGuess(userGuess, correct);
+
 	},
 
 	askQuestion: function() {
@@ -103,13 +112,11 @@ var game = {
 		$('#aDisplay').append("<div id ='answerThree'</div>");
 		$('#aDisplay').append("<div id ='answerFour'</div>");
 
-		//window.refreshIntervalId;
-
 		console.log("In askQuestion");
 
 		//Timer counts down
-		//setInterval(game.countDown, 1000);
-	
+		clock = setInterval(game.countDown, 1000);
+
 		//Display question
 		$('#qDisplay').html(question[0].question);
 
@@ -129,28 +136,31 @@ var game = {
 		//Set correct answer
 		var correct = question[0].correctAnswer;
 	
-
 		//Take user guess
 		$('#answerOne').unbind().click(function() {
 			
+			clearInterval(clock);
 			userGuess = answerOne;
 			game.checkGuess(userGuess, correct);
 		})
 
 		$('#answerTwo').unbind().click(function() {
 			
+			clearInterval(clock);
 			userGuess = answerTwo;
 			game.checkGuess(userGuess, correct);
 		})
 
 		$('#answerThree').unbind().click(function() {
 			
+			clearInterval(clock);
 			userGuess = answerThree;
 			game.checkGuess(userGuess, correct);
 		})
 
 		$('#answerFour').unbind().click(function() {
 			
+			clearInterval(clock);
 			userGuess = answerFour;
 			game.checkGuess(userGuess, correct);
 		})
@@ -161,6 +171,7 @@ var game = {
 
 		console.log("In checkGuess");
 
+		//If user picks correct answer
 		if (userGuess === correct){
 			
 			//Display congrats
@@ -181,6 +192,8 @@ var game = {
 			game.pause();
 
 		}
+
+		//If user doesn't pick an answer before time runs out
 		else if (userGuess === null){
 			
 			//Discourage
@@ -192,18 +205,22 @@ var game = {
 			$('#answerThree').remove();
 			$('#answerFour').remove();
 
+			//Reveal correct answer
 			$('#aDisplay').html("The correct answer was " + correct);
 
 			//Assign pic to correctImg and display
 			var correctImg = '<img src="http://i.giphy.com/l2JJLpA2wWNqJUwXC.gif" width="480" height="300"/>';
 			$('#graphic').html(correctImg);
 
+			//Increment unanswered count
 			game.unanswered++;
 			
+			//Go to pause
 			game.pause();
 
 		}
 
+		//If user picks wrong answer
 		else {
 			//Discourage
 			$('#qDisplay').html(game.results[1]);
@@ -214,22 +231,22 @@ var game = {
 			$('#answerThree').remove();
 			$('#answerFour').remove();
 
+			//Reveal correct answer
 			$('#aDisplay').html("The correct answer was " + correct);
 
 			//Assign pic to correctImg and display
 			var correctImg = '<img src="http://i.giphy.com/l2JJLpA2wWNqJUwXC.gif" width="480" height="300"/>';
 			$('#graphic').html(correctImg);
 
+			//Increment incorrect count
 			game.incorrectScore++;
 
+			//Go to pause
 			game.pause();
 		}
 	},
 
 	pause: function() {
-
-		//Stop countDown
-		clearInterval();
 
 		console.log("In pause");
 
