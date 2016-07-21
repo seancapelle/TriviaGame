@@ -86,3 +86,10 @@ span {
 	border: 10px solid lightblue;
 	border-radius: 20px;
 }
+#graphic {
+	width: 480px;
+	margin: auto;
+	display: block;
+	position: relative;
+	top: 100px;
+}

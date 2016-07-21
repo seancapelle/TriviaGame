@@ -49,6 +49,7 @@ var game = {
 	correctScore: 0,
 	incorrectScore: 0,
 	unanswered: 0,
+	results: ["The Force is with you!", "That is why you fail."],
 
 	//Functions
 	countDown: function() {
@@ -126,15 +127,37 @@ var game = {
 		console.log("In checkGuess");
 
 		if (userGuess === correct){
-			alert("YES!");
-			game.correctScore++;
-			game.nextQuestion();
 			
+			//Display congrats
+			$('#qDisplay').html(game.results[0]);
+			
+			//Zero out answers to display none of them
+			question.answers = [];
+			$('#aDisplay').html(question.answers);
+
+			//Assign pic to correctImg and display
+			var correctImg = '<img src="http://i.giphy.com/3o8doOlGO3pjQa5h28.gif" width="480" height="207"/>';
+			$('#graphic').html(correctImg);
+
+			game.correctScore++;
+			// game.nextQuestion();
+
 		}
 		else {
-			alert("NO!");
+			//Discourage
+			$('#qDisplay').html(game.results[1]);
+
+			//Zero out answers to display none of them and show correct
+			question.answers = [];
+			$('#aDisplay').html("The correct answer was " + correct);
+
+			//Assign pic to correctImg and display
+			var correctImg = '<img src="http://i.giphy.com/l2JJLpA2wWNqJUwXC.gif" width="480" height="300"/>';
+			$('#graphic').html(correctImg);
+
+
 			game.incorrectScore++;
-			game.nextQuestion();
+			// game.nextQuestion();
 		}
 	},
 
