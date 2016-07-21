@@ -1,17 +1,32 @@
-/*body {
+body {
 	background-image: url(../images/stars.png);
-}*/
+	height: 800px;
+}
 h1{
 	color: yellow;
+	margin: auto;
+	display: block;
+	width: 125px;
+	font-size: 40px;
+	font-family: Arial, sans-serif;
+	position: relative;
+	top: -10px;
 }
 h2{
 	color: yellow;
+}
+.logo {
+	margin: auto;
+	display: block;
 }
 #title {
 	margin: 20px;
 }
 #time {
+	width: 150px;
+	height: 30px;
 	margin: auto;
+	display: block;
 }
 #timer {
 	color: yellow;
@@ -23,19 +38,51 @@ span {
 	width: 600px;
 	height: 500px;
 	margin: auto;
+	display: block;
 	background-color: white;
 	border: 10px solid lightblue;
 	border-radius: 20px;
+	z-index: -1;
 }
-answerOne:hover {
-
+#qDisplay {
+	position: relative;
+	top: 50px;
+	font-size: 30px;
+	width: 500px;
+	margin: auto;
 }
-answerTwo:hover {
-
+#aDisplay {
+	position: relative;
+	top: 70px;
+	width: 500px;
+	margin: auto;
+	display: block;
 }
-answerThree:hover {
-
+#answerOne {
+	padding: 10px;
 }
-answerFour:hover {
-	
+#answerTwo {
+	padding: 10px;
+}
+#answerThree {
+	padding: 10px;
+}
+#answerFour {
+	padding: 10px;
+}
+#answerOne:hover {
+	border: 10px solid lightblue;
+	border-radius: 20px;
+}
+#answerTwo:hover {
+	border: 10px solid lightblue;
+	border-radius: 20px;
+}
+#answerThree:hover {
+	border: 10px solid lightblue;
+	border-radius: 20px;
+}
+#answerFour:hover {
+	border: 10px solid lightblue;
+	border-radius: 20px;
 }

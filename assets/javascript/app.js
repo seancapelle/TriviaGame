@@ -67,6 +67,8 @@ var game = {
 
 	askQuestion: function() {
 
+		window.refreshIntervalId;
+
 		console.log("In askQuestion");
 
 		//Timer counts down
@@ -143,17 +145,34 @@ var game = {
 		//Set next question to index 0
 		question.shift();
 
-		game.timer = 30;
-		// window.refreshIntervalId;
-		clearInterval(game.countDown);
+		//Checks if any questions are left
+		if(question.length === 0) {
+			
+			game.finished();
+		}
+		else {
+			game.askQuestion();	
+	
+			//Reset seconds
+			game.timer = 30;
 
-		game.askQuestion();
+			//CAN'T GET TIMER TO STOP!!!
+			// window.refreshIntervalId;
+			clearInterval(game.countDown);
+		}
+
 	},
 
 	finished: function() {
-		console.log(correctScore);
-		console.log(incorrectScore);
-		console.log(unanswered);
+		
+		console.log("In finished");
+		console.log(game.correctScore);
+		console.log(game.incorrectScore);
+		console.log(game.unanswered);
+		$('#qDisplay').html("May the Force be with you!");
+		$('#aDisplay').html("<p>Number of questions right: " + game.correctScore + "</p>" +
+							"<p>Number of questions wrong: " + game.incorrectScore + "</p>" +
+							"<p>Number of questions unanswered: " + game.unanswered + "</p>");
 	},
 
 	reset: function() {
@@ -175,11 +194,5 @@ game.askQuestion();
 //NOTES
 //question++
 
-// if (question === question.length){
-
-// }
 
 
-
-
-// game.checkGuess();
