@@ -1,3 +1,5 @@
+//USE ONE ON CLICK THAT USES A BUTTON CLASS, INSTEAD OF FOUR INDIVIDUAL BUTTONS
+
 //Questions object
 var question = [{
 	question: "Between Greedo and Han, who shot first?",
